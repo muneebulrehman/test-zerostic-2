@@ -1,0 +1,106 @@
+.appContainer{
+  width: 100%;
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  margin: auto;
+  border: 5px;
+  padding: 2rem 1rem;
+  background: #D6D7DA;
+}
+
+.innerContainer{
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  border-radius: 10px;
+  background: #F5F5F7;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.weatherInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+}
+
+.infoCards{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.weatherInfoSubHeading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+  padding: 0 2rem;
+}
+
+.errorContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.errorHeading{
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.errorText{
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.interactiveFeatures{
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media screen and (width >= 950px){
+
+  .appContainer{
+    padding: 2rem 8rem;
+  }
+
+  .innerContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .weatherInfoSubHeading{
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (width >= 1200px){
+  .appContainer{
+    padding: 2rem 8rem;
+  }
+
+  .innerContainer {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+

@@ -1,0 +1,21 @@
+
+.recentInputs {
+  width: 200px;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.recentInputs:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+@media screen and (width <= 768px){
+
+  .recentInputs {
+    width: 150px;
+  }
+}
