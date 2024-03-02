@@ -4,8 +4,9 @@
   /* align-items: center;
   justify-content: center; */
   height: 100%;
-  background-color: #f5f5f5;
-  padding: 10px;
+  background-color: #FFFFFE;
+  padding: 10px 20px;
+  max-width: 500px;
 }
 
 .searchContainer{
@@ -13,8 +14,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  background-color: #f5f5f5;
+  background-color: #FFFFFE;
+  margin-top: 2rem;
 }
 
 .searchInput{
@@ -35,25 +36,29 @@
   border: none;
   outline: none;
   font-size: 1.1rem;
-  background-color: #332525;
+  /* background-color: #332525; */
+  background-color: #FFFFFE;
   cursor: pointer;
 }
 
-.weatherCondition{
+.weatherContainer{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  margin-top: 3rem;
 }
 
 .weather{
   display: flex;
   flex-direction: column;
+  padding-left: 2rem;
 }
 
 .weatherIcon{
   width: 120px;
   height: 120px;
+  margin-bottom: 2rem;
 }
 
 .weatherIcon img{
@@ -66,23 +71,30 @@
   flex-direction: column;
   /* align-items: center;
   justify-content: center; */
+  gap: 1rem;
 }
 
 .temperature{
-  font-size: 4rem;
+  font-size: 5rem;
+  font-weight: 200;
   color: rgb(22, 20, 20);
 }
 
 .description{
-  font-size: 1.5rem;
+  font-size: 1.15rem;
+  color: rgb(22, 20, 20);
+}
+
+.formattedTime{
+  font-size: 1.15rem;
   color: rgb(22, 20, 20);
 }
 
 .divider{
   width: 80%;
   height: 1px;
-  background-color: #757575;
-  margin: 10px auto;
+  background-color: #d3d3d3;
+  margin: 2rem auto;
 }
 
 .cloudyStatus {
@@ -98,6 +110,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-left: 2rem;
 
 }
 
@@ -110,15 +123,26 @@
   color: rgb(22, 20, 20);
 }
 
-.cityName{
-  font-size: 2rem;
-  color: rgb(22, 20, 20);
+.cityNameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  height: 5rem;
+  background: linear-gradient(rgba(194, 67, 62, 0.623), rgba(179, 179, 179, 0.63)), url(../assets/cityBg.jpg) center / cover no-repeat;
+  border-radius: 10px;
+  overflow: hidden;
+  place-self: center;
+  margin-top: 1rem;
 }
 
-
-
-
+.cityName{
+  font-size: 1.5rem;
+  color: rgb(255, 255, 255);
+}
 
 @media screen and (width >= 768px){
-  
+  .container {
+    padding: 1rem 2rem;
+  }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { Loader, MainWeatherComponent } from './components';
+import { Loader, MainWeatherComponent, InfoCard, InfoCards } from './components';
 import fetchWeatherData from './helpers/weatherFetcher';
 import styles from './app.module.css';
 
@@ -91,6 +91,11 @@ function App() {
       <div className={styles.appContainer}>
         <div className={styles.innerContainer}>
           <MainWeatherComponent data={weatherData} setCity={setCity} city={city} />
+          <div className={styles.weatherInfo}>
+            <div className={styles.infocards}>
+              <InfoCards data={weatherData} />
+            </div>
+          </div>
         </div>
       </div>
     </>
