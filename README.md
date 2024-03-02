@@ -1,8 +1,57 @@
-# React + Vite
+# Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a weather application built with React. It allows users to search for weather information by city name. The application displays current weather conditions, including temperature, weather description, and an icon representing the weather condition. It also provides a list of recently searched cities for quick access.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search weather by city name
+- Display current weather conditions
+- Switch between Celsius and Fahrenheit
+- Display a list of recently searched cities
+- Error handling for invalid city names
+
+## Installation
+
+Before you start, make sure you have Node.js and npm installed on your machine.
+
+1. Clone this repository:
+
+2. Navigate to the project directory:
+
+3. Install the dependencies:
+   `npm install`
+
+## Usage
+
+To start the application, run the following command:
+`npm run dev`
+
+### API Usage
+
+API used: [weatherapi](http://api.weatherapi.com)
+
+- Key is required to use the API. You can get a free key by signing up on the website.
+
+## Project structure.
+
+The project structure is as follows:
+
+- `src/`: This directory contains all the React code.
+  - `App.jsx`: This is the main component of the application.
+  - `components/`: This directory contains all the other React components.
+    - `InfoCard.jsx`: This component displays a card with weather information.
+    - `InfoCards.jsx`: This component displays a list of InfoCard components.
+    - `Loader.jsx`: This component displays a loading spinner.
+    - `MainWeather.jsx`: This component displays the main weather information and the search box.
+    - `RecentInputs.jsx`: This component displays a dropdown list of recently searched cities.
+    - `TemperatureFlipper.jsx`: This component displays two buttons to switch between Celsius and Fahrenheit.
+  - `helpers/`: This directory contains helper functions.
+    - `weatherFetcher.js`: This file contains a function to fetch weather data from the API.
+- `public/`: This directory contains the public assets of the application.
+  - `index.html`: This is the main HTML file.
+- `package.json`: This file contains the list of npm dependencies.
+- `vite.config.js`: This file contains the configuration for Vite.
+
+### License
+
+This project is licensed under the MIT License.
