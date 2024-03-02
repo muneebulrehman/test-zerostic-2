@@ -102,12 +102,6 @@ function App() {
             </div>
           </div>
         </div>
-        {!weatherData && (
-          <div className={styles.errorContainer}>
-            <h1 className={styles.errorHeading}>City Not Found</h1>
-            <p className={styles.errorText}>Please enter a valid city name and try again.</p>
-          </div>
-        )}
       </div>
     </>
   );
