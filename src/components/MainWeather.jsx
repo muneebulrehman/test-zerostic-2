@@ -1,8 +1,8 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 
 import styles from './mainWeather.module.css';
 
-const MainWeather = ({ data, setCity, city }) => {
+const MainWeather = ({ data, setCity, city, active }) => {
   const inputRef = useRef(null);
 
   const cloudyStatus = useMemo(() => {
@@ -27,6 +27,20 @@ const MainWeather = ({ data, setCity, city }) => {
     return new Intl.DateTimeFormat('en-US', options).format(datetime);
   }, [data]);
 
+  const temperature = useMemo(() => {
+    if (active === 1) {
+      return `${data?.current?.temp_c}`;
+    }
+    return data?.current?.temp_f;
+  }, [data, active]);
+
+  const temperatureFeel = useMemo(() => {
+    if (active === 1) {
+      return `${data?.current?.feelslike_c}`;
+    }
+    return data?.current?.feelslike_f;
+  }, [data, active]);
+
   console.log(data);
   return (
     <div className={styles.container}>
@@ -50,10 +64,8 @@ const MainWeather = ({ data, setCity, city }) => {
           </div>
           <div className={styles.weatherInfo}>
             <p className={styles.temperature}>
-              {data?.current?.temp_c}
-              <span>
-                <sup>&deg;C</sup>
-              </span>
+              {temperature}
+              <span>{active === 1 ? <sup>&deg;C</sup> : <sup>&deg;F</sup>}</span>
             </p>
             <p className={styles.description}>
               {data?.current?.condition?.text}
@@ -71,8 +83,8 @@ const MainWeather = ({ data, setCity, city }) => {
         <div className={styles.extraInfo}>
           <p className={styles.cloudyStatus}>{cloudyStatus}</p>
           <p className={styles.infoItem}>
-            Feels Like: {data?.current?.feelslike_c}
-            <sup>&deg;C</sup>
+            Feels Like: {temperatureFeel}
+            {active === 1 ? <sup>&deg;C</sup> : <sup>&deg;F</sup>}
           </p>
 
           <div className={styles.infoItem}>

@@ -10,6 +10,7 @@
 }
 
 .innerContainer{
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   border-radius: 10px;
@@ -19,10 +20,50 @@
   width: 100%;
 }
 
-@media screen and (width >= 768px){
+.weatherInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+}
+
+.infoCards{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.weatherInfoSubHeading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+  padding: 0 2rem;
+}
+
+@media screen and (width >= 950px){
 
   .appContainer{
-    padding: 4rem 8rem;
+    padding: 2rem 8rem;
+  }
+
+  .innerContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .weatherInfoSubHeading{
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (width >= 1200px){
+  .appContainer{
+    padding: 2rem 8rem;
   }
 
   .innerContainer {

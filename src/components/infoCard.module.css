@@ -7,9 +7,10 @@
   background-color: #fff;
   width: 230px;
   height: 170px;
-  text-align: center;
   align-items: flex-start;
   justify-content: space-between;
+    /* flex: 1 0 100%; */
+    /* max-width: 100%; */
 }
 
 .title {
@@ -36,5 +37,19 @@
   color: #adadad;
   margin-top: 10px;
   font-weight: 500;
+}
+
+/* @media screen and (width >= 768px){
+  .container{
+    flex: 1 0 30%;
+    max-width: 30%;
+  }
+} */
+
+@media screen and (width >= 1200px){
+  .container{
+    flex: 1 0 30%;
+    max-width: 30%;
+  }
 }
 

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { Loader, MainWeatherComponent, InfoCard, InfoCards } from './components';
+import {
+  Loader,
+  MainWeatherComponent,
+  InfoCards,
+  TemperatureFlipper,
+  RecentInputs
+} from './components';
 import fetchWeatherData from './helpers/weatherFetcher';
 import styles from './app.module.css';
 
@@ -59,6 +65,14 @@ function App() {
   });
   const [loading, setLoading] = useState(false);
   const [city, setCity] = useState('New Delhi');
+  const [active, setActive] = useState(1);
+  const [recentCities, setRecentCities] = useState([
+    'New Delhi',
+    'London',
+    'New York',
+    'Tokyo',
+    'Sydney'
+  ]);
 
   console.log(city);
 
@@ -90,9 +104,11 @@ function App() {
     <>
       <div className={styles.appContainer}>
         <div className={styles.innerContainer}>
-          <MainWeatherComponent data={weatherData} setCity={setCity} city={city} />
+          <TemperatureFlipper active={active} setActive={setActive} />
+          <MainWeatherComponent data={weatherData} setCity={setCity} city={city} active={active} />
           <div className={styles.weatherInfo}>
-            <div className={styles.infocards}>
+            <h2 className={styles.weatherInfoSubHeading}>Today's Highlights</h2>
+            <div className={styles.infoCards}>
               <InfoCards data={weatherData} />
             </div>
           </div>
