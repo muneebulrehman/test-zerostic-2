@@ -34,7 +34,7 @@ API used: [weatherapi](https://www.weatherapi.com)
 
 ### Live Demo
 
-Live demo of the project can be found [here](https://deploy-preview-4--weatherappforzerostic.netlify.app/)
+Live demo of the project can be found [here](https://weatherappforzerostic.netlify.app/)
 
 > **Note:** Try the live demo in the morning hours for the best experience. The API key used in the live demo has a limited number of requests per day and is down most of the time. If the live demo is not working, you can run the project locally by following the installation instructions. Also, Keep refreshing. It might work out of blue. 😊
 
