@@ -28,7 +28,7 @@ To start the application, run the following command:
 
 ### API Usage
 
-API used: [weatherapi](http://api.weatherapi.com)
+API used: [weatherapi](https://www.weatherapi.com)
 
 - Key is required to use the API. You can get a free key by signing up on the website.
 
