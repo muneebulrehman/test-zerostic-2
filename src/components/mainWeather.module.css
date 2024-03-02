@@ -1,8 +1,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  /* align-items: center;
-  justify-content: center; */
   height: 100%;
   background-color: #FFFFFE;
   padding: 30px 20px;
@@ -36,7 +34,6 @@
   border: none;
   outline: none;
   font-size: 1.1rem;
-  /* background-color: #332525; */
   background-color: #FFFFFE;
   cursor: pointer;
 }
@@ -69,8 +66,6 @@
 .weatherInfo{
   display: flex;
   flex-direction: column;
-  /* align-items: center;
-  justify-content: center; */
   gap: 1rem;
 }
 
