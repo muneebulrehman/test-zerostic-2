@@ -32,6 +32,12 @@ API used: [weatherapi](http://api.weatherapi.com)
 
 - Key is required to use the API. You can get a free key by signing up on the website.
 
+### Live Demo
+
+Live demo of the project can be found [here](https://deploy-preview-4--weatherappforzerostic.netlify.app/)
+
+> **Note:** Try the live demo in the morning hours for the best experience. The API key used in the live demo has a limited number of requests per day and is down most of the time.
+
 ## Project structure.
 
 The project structure is as follows:
