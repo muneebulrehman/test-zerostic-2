@@ -127,6 +127,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   width: 20rem;
   height: 5rem;
   background: linear-gradient(rgba(194, 67, 62, 0.623), rgba(179, 179, 179, 0.63)), url(../assets/cityBg.jpg) center / cover no-repeat;
@@ -141,8 +142,13 @@
   color: rgb(255, 255, 255);
 }
 
+.countryName{
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
+}
+
 @media screen and (width >= 768px){
   .container {
-    padding: 1rem 2rem;
+    padding: 30px 2rem;
   }
 }

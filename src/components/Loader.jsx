@@ -2,6 +2,16 @@ import React from 'react';
 
 import styles from './loader.module.css';
 
+/**
+ * Loader component displays a loading spinner.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Loader />
+ * )
+ */
+
 const Loader = () => {
   return (
     <div className={styles.mainContainer}>

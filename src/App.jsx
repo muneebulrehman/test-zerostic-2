@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import {
@@ -11,90 +11,72 @@ import {
 import fetchWeatherData from './helpers/weatherFetcher';
 import styles from './app.module.css';
 
+/**
+ * The main App component.
+ *
+ * @component
+ * @example
+ * return (
+ *   <App />
+ * )
+ */
+
 function App() {
-  const [weatherData, setWeatherData] = useState({
-    location: {
-      name: 'London',
-      region: 'City of London, Greater London',
-      country: 'United Kingdom',
-      lat: 51.52,
-      lon: -0.11,
-      tz_id: 'Europe/London',
-      localtime_epoch: 1709317869,
-      localtime: '2024-03-01 18:31'
-    },
-    current: {
-      last_updated_epoch: 1709316900,
-      last_updated: '2024-03-01 18:15',
-      temp_c: 4.0,
-      temp_f: 39.2,
-      is_day: 0,
-      condition: {
-        text: 'Light rain',
-        icon: '//cdn.weatherapi.com/weather/64x64/night/296.png',
-        code: 1183
-      },
-      wind_mph: 6.9,
-      wind_kph: 11.2,
-      wind_degree: 220,
-      wind_dir: 'SW',
-      pressure_mb: 991.0,
-      pressure_in: 29.26,
-      precip_mm: 0.21,
-      precip_in: 0.01,
-      humidity: 93,
-      cloud: 75,
-      feelslike_c: 0.4,
-      feelslike_f: 32.7,
-      vis_km: 10.0,
-      vis_miles: 6.0,
-      uv: 1.0,
-      gust_mph: 14.8,
-      gust_kph: 23.9,
-      air_quality: {
-        co: 250.3,
-        no2: 16.8,
-        o3: 72.2,
-        so2: 6.1,
-        pm2_5: 0.9,
-        pm10: 1.2,
-        'us-epa-index': 1,
-        'gb-defra-index': 1
-      }
-    }
-  });
+  const [weatherData, setWeatherData] = useState();
   const [loading, setLoading] = useState(false);
   const [city, setCity] = useState('New Delhi');
   const [active, setActive] = useState(1);
-  const [recentCities, setRecentCities] = useState([
-    'New Delhi',
-    'London',
-    'New York',
-    'Tokyo',
-    'Sydney'
-  ]);
+  const [recentCities, setRecentCities] = useState([]);
 
-  console.log(city);
+  useEffect(() => {
+    handleFetchWeatherData();
+  }, [city]);
 
-  // useEffect(() => {
-  //   handleFetchWeatherData();
-  // }, []);
+  /**
+   * Fetches weather data for the current city and updates the state.
+   * If the city is not in the recentCities list and the list has less than 5 items,
+   * the city is added to the list. If the list has 5 items, the oldest city is removed
+   * and the new city is added to the list.
+   * If the fetch request fails, an error message is displayed.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>} Nothing
+   */
 
-  // const handleFetchWeatherData = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await fetchWeatherData('London');
-  //     // if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-  //     const data = await response.json();
-  //     if (data) setWeatherData(data);
-  //   } catch (error) {
-  //     toast.error(`Error: ${error}`);
-  //     // Retry after 5 seconds
-  //     // setTimeout(handleFetchWeatherData, 10000);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleFetchWeatherData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await fetchWeatherData(city);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      if (data) {
+        setWeatherData(data);
+        if (!recentCities?.includes(data?.location?.name)) {
+          setRecentCities((prev) => {
+            if (prev.length >= 5) {
+              return [data?.location?.name, ...prev.slice(0, -1)];
+            } else {
+              return [data?.location?.name, ...prev];
+            }
+          });
+        }
+      }
+    } catch (error) {
+      if (error instanceof TypeError) {
+        toast.error('Server issues because of free tier.');
+      }
+
+      if (error.message == 'HTTP error! status: 400') {
+        toast.error('Please enter a valid city name and try again.');
+      }
+      // else toast.error(`Error: ${error}`);
+      // Retry after 10 seconds
+      // setTimeout(handleFetchWeatherData, 10000);
+    } finally {
+      setLoading(false);
+    }
+  }, [city]);
 
   if (loading) {
     return <Loader />;
@@ -104,7 +86,14 @@ function App() {
     <>
       <div className={styles.appContainer}>
         <div className={styles.innerContainer}>
-          <TemperatureFlipper active={active} setActive={setActive} />
+          <div className={styles.interactiveFeatures}>
+            <RecentInputs
+              recentCities={recentCities}
+              setCity={setCity}
+              cityFromData={weatherData?.location?.name}
+            />
+            <TemperatureFlipper active={active} setActive={setActive} />
+          </div>
           <MainWeatherComponent data={weatherData} setCity={setCity} city={city} active={active} />
           <div className={styles.weatherInfo}>
             <h2 className={styles.weatherInfoSubHeading}>Today's Highlights</h2>
@@ -113,6 +102,12 @@ function App() {
             </div>
           </div>
         </div>
+        {!weatherData && (
+          <div className={styles.errorContainer}>
+            <h1 className={styles.errorHeading}>City Not Found</h1>
+            <p className={styles.errorText}>Please enter a valid city name and try again.</p>
+          </div>
+        )}
       </div>
     </>
   );
