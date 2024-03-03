@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { toast } from 'react-toastify';
 
 import styles from './mainWeather.module.css';
@@ -19,10 +19,9 @@ import styles from './mainWeather.module.css';
  * )
  */
 
-const MainWeather = ({ data, setCity, city, active }) => {
-  const inputRef = useRef(null);
-
-  const handleEnteredCity = () => {
+const MainWeather = ({ data, setCity, city, active, inputRef }) => {
+  const handleEnteredCity = (e) => {
+    e.preventDefault();
     const trimmedValue = inputRef.current.value.trim();
     if (trimmedValue === '') {
       toast.error('Please enter a valid city name');
@@ -30,7 +29,6 @@ const MainWeather = ({ data, setCity, city, active }) => {
     }
     if (trimmedValue.toLowerCase() === city.toLowerCase()) return;
     setCity(trimmedValue);
-    inputRef.current.value = '';
   };
 
   const cloudyStatus = useMemo(() => {
@@ -78,17 +76,19 @@ const MainWeather = ({ data, setCity, city, active }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.searchContainer}>
+      {/* <div className={styles.searchContainer}> */}
+      <form onSubmit={handleEnteredCity} className={styles.searchContainer}>
         <input
           ref={inputRef}
           type="text"
           placeholder="Search for a city..."
           className={styles.searchInput}
         />
-        <button onClick={handleEnteredCity} className={styles.searchButton} aria-label="Search">
+        <button type="submit" className={styles.searchButton} aria-label="Search">
           🔍
         </button>
-      </div>
+      </form>
+      {/* </div> */}
       {data && (
         <div className={styles.weatherContainer}>
           <div className={styles.weather}>
