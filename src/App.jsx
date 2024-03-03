@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { toast } from 'react-toastify';
 
 import {
@@ -27,9 +27,10 @@ function App() {
   const [city, setCity] = useState('New Delhi');
   const [active, setActive] = useState(1);
   const [recentCities, setRecentCities] = useState([]);
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    handleFetchWeatherData();
+    handleFetchWeatherData(inputRef.current.value);
   }, [city]);
 
   /**
@@ -44,39 +45,49 @@ function App() {
    * @returns {Promise<void>} Nothing
    */
 
-  const handleFetchWeatherData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await fetchWeatherData(city);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      if (data) {
-        setWeatherData(data);
-        if (!recentCities?.includes(data?.location?.name)) {
-          setRecentCities((prev) => {
-            if (prev.length >= 5) {
-              return [data?.location?.name, ...prev.slice(0, -1)];
-            } else {
-              return [data?.location?.name, ...prev];
-            }
-          });
+  const handleFetchWeatherData = useCallback(
+    async (inputRefValue) => {
+      setLoading(true);
+      try {
+        const response = await fetchWeatherData(city);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error.message || 'Server error');
         }
+        const data = await response.json();
+        if (data.error) throw new Error(data.error.message);
+        if (data) {
+          setWeatherData(data);
+          if (
+            !recentCities?.includes(data?.location?.name) &&
+            inputRefValue &&
+            inputRefValue.length > 0
+          ) {
+            setRecentCities((prev) => {
+              if (prev.length >= 5) {
+                return [data?.location?.name, ...prev.slice(0, -1)];
+              } else {
+                return [data?.location?.name, ...prev];
+              }
+            });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        if (error instanceof TypeError) {
+          toast.error('Server issues because of free tier.');
+        } else if (error.message.includes('400')) {
+          toast.error('Please enter a valid city name and try again.');
+        } else {
+          toast.error(`${error}`);
+        }
+        setCity(recentCities[0] || 'New Delhi');
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      if (error instanceof TypeError) {
-        toast.error('Server issues because of free tier.');
-      }
-
-      if (error.message == 'HTTP error! status: 400') {
-        toast.error('Please enter a valid city name and try again.');
-      }
-      // else toast.error(`Error: ${error}`);
-      // Retry after 10 seconds
-      // setTimeout(handleFetchWeatherData, 10000);
-    } finally {
-      setLoading(false);
-    }
-  }, [city]);
+    },
+    [city]
+  );
 
   if (loading) {
     return <Loader />;
@@ -94,9 +105,17 @@ function App() {
             />
             <TemperatureFlipper active={active} setActive={setActive} />
           </div>
-          <MainWeatherComponent data={weatherData} setCity={setCity} city={city} active={active} />
+          <MainWeatherComponent
+            data={weatherData}
+            setCity={setCity}
+            city={city}
+            active={active}
+            inputRef={inputRef}
+          />
           <div className={styles.weatherInfo}>
-            <h2 className={styles.weatherInfoSubHeading}>Today's Highlights</h2>
+            <h2 className={styles.weatherInfoSubHeading}>
+              {weatherData ? `Today's Highlights` : 'No Data Available'}
+            </h2>
             <div className={styles.infoCards}>
               <InfoCards data={weatherData} />
             </div>
